@@ -1,0 +1,26 @@
+Package: xlversion
+Title: Versioning and change tracking for Excel files (.xlsx)
+Version: 0.0.0.9000
+Authors@R: 
+    person("Vera", "Gonçalves", , "vera.maria.dg@gmail.com", role = c("aut", "cre"))
+Description: `xlversion` provides tools to create fingerprints, snapshots, and intelligent comparisons of Excel files at the sheet level. Ideal for version control, auditing, and data pipelines.
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.0.0
+Suggests: 
+    fabricatr,
+    testthat (>= 3.0.0),
+    waldo,
+    withr
+Config/testthat/edition: 3
+Imports: 
+    checkmate,
+    cli,
+    dplyr,
+    janitor,
+    openxlsx,
+    readxl,
+    rlang,
+    tibble,
+    writexl
