@@ -1,0 +1,78 @@
+# xlversion
+
+**Versioning and change tracking for Excel files (.xlsx)**
+
+A lightweight R package for creating deterministic fingerprints, snapshots, and intelligent comparisons of Excel workbooks at the sheet level. Designed for audit trails, regulatory compliance, data pipelines, and version control workflows.
+
+## Features
+
+- **Sheet-level fingerprinting** using cryptographic hashes (SHA-256 recommended)
+- **Robust Excel reading** with isolated sheet-level error handling
+- **Smart version comparison** that detects:
+  - New / deleted sheets
+  - Structural changes (row/column count)
+  - Content changes (cell values)
+- **S3 object system** (`excel_book` and `excel_sheet`) for clean handling of workbooks
+- Production-grade input validation and informative messaging via `cli`
+- Support for ignoring column order when appropriate
+
+## Installation
+
+You can install the development version from GitHub:
+
+```r
+# install.packages("devtools")
+devtools::install_github("Verag/xlversion")
+```
+
+
+## Quick Start
+
+```r
+library(xlversion)
+
+# 1. Create a snapshot of an Excel file
+snap <- snapshot_excel("my_report.xlsx", verbose = TRUE)
+
+# 2. Compare two versions
+comparison <- compare_excel_versions(
+  old_path = "report_v1.xlsx",
+  new_path = "report_v2.xlsx",
+  only_changes = TRUE
+)
+
+print(comparison)
+```
+
+## Main Functions
+
+| Function | Purpose |
+|-----------|-----------|
+| `snapshot_excel()` | Create a hash-based snapshot of all (or selected) sheets |
+| `compare_excel_versions()` | Compare two Excel files and report changes |
+| `file_fingerprint()` | Generate metadata and hash for a file or specific sheet |
+| `read_excel_allsheets()` | Robust reader returning an `excel_book` S3 object |
+
+## Example Output
+
+```r
+# Comparison example
+# sheet           status            change_type  rows_diff  cols_diff
+# Summary         Content changed   data         0          0
+# Raw Data        Structure changed structure    124        -2
+# New_Tab         New sheet         <NA>         NA         NA
+
+```
+
+## Use Cases
+
+ - Tracking changes in financial reports or regulatory submissions
+ - Data pipeline integrity checks
+ - Automated audit and reconciliation processes
+ - Detecting unintended modifications in shared Excel files
+
+## License
+This project is licensed under the MIT License (see LICENSE.md).
+
+## Contributing
+Contributions are welcome! Please see the Contributing guide for details.
