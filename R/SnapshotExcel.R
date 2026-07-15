@@ -27,22 +27,16 @@ snapshot_excel <- function(filename,
     stop("File does not exist: ", filename, call. = FALSE)
   }
 
-  if (!grepl("\\.xlsx?$", basename(filename), ignore.case = TRUE)) {
-    warning("`filename` does not appear to be an Excel file (.xlsx/.xls)",
-            call. = FALSE)
-  }
-
   # -------------------------
   # READ WORKBOOK
   # -------------------------
-  if (verbose) message("📸 Creating snapshot for: ", basename(filename))
+  if (verbose) message("Creating snapshot for: ", basename(filename))
 
   book <- read_excel_allsheets(
     filename = filename,
     sheet_names = sheets,
     tibble = TRUE,
     verbose = verbose,
-    return_failed = TRUE,
     ...
   )
 
@@ -84,7 +78,7 @@ snapshot_excel <- function(filename,
   )
 
   if (verbose) {
-    message("✅ Snapshot created for ", nrow(snapshot), " sheet(s).")
+    message("Snapshot created for ", nrow(snapshot), " sheet(s).")
   }
 
   snapshot

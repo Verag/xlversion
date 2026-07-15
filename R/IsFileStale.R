@@ -10,7 +10,6 @@
 #' @return A list (invisibly) with file metadata.
 #'
 #' @export
-#' Check if a file is stale (CRAN-safe version)
 is_file_stale <- function(path,
                           max_age_days = 1,
                           use_hash = TRUE,
@@ -151,3 +150,4 @@ is_file_stale <- function(path,
 
   invisible(result)
 }
+
