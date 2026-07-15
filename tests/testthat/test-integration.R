@@ -35,7 +35,16 @@ test_that("Full versioning workflow works end-to-end", {
 
   # Validations
   expect_gt(nrow(comparison), 0)
-  expect_true(any(comparison$status %in% c("Changed", "New sheet")))
+  expect_true(
+    any(
+      comparison$status %in%
+        c(
+          "Content changed",
+          "Structure changed",
+          "New sheet"
+        )
+    )
+  )
 
   # Test with  only_changes = TRUE
   changes_only <- compare_excel_versions(tmp_v1, tmp_v2, only_changes = TRUE)
@@ -64,7 +73,10 @@ test_that("Versioning workflow with specific sheets works", {
   )
 
   expect_equal(nrow(comp), 1)
-  expect_equal(comp$status, "Changed")
+  expect_equal(
+    comp$status,
+    "Structure changed"
+  )
 })
 
 # =============================================================================

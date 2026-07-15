@@ -135,13 +135,22 @@ test_that("ignore_column_order behaves correctly", {
 # EMPTY & EDGE CASES
 # =============================================================================
 test_that("handles empty sheets safely", {
-  path <- make_excel_file(list(EmptySheet = data.frame()))
 
-  expect_error(snapshot_excel(path), NA)
+  path <- make_excel_file(
+
+    list(
+
+      EmptySheet = data.frame()
+
+    )
+
+  )
 
   result <- snapshot_excel(path)
+
   expect_equal(result$n_rows, 0)
   expect_equal(result$n_cols, 0)
+
 })
 
 # =============================================================================
@@ -154,35 +163,61 @@ test_that("fails safely on missing files", {
   )
 })
 
-test_that("warns on non-excel extension", {
+test_that("fails on unsupported Excel extension", {
+
   path <- tempfile(fileext = ".txt")
   writeLines("not excel", path)
 
-  expect_warning(
+  expect_error(
     snapshot_excel(path),
-    "does not appear to be an Excel file"
+    "Unsupported Excel file extension"
   )
+
 })
 
-test_that("returns empty tibble when no sheets are found", {
-  path <- make_excel_file(list("A" = data.frame(x = 1)))
-  result <- snapshot_excel(path, sheets = "NON_EXISTENT")
+test_that("fails when requested sheets do not exist", {
 
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 0)
+  path <- make_excel_file(
+
+    list(
+
+      A = data.frame(x = 1)
+
+    )
+
+  )
+
+  expect_error(
+
+    snapshot_excel(
+
+      path,
+
+      sheets = "NON_EXISTENT"
+
+    ),
+
+    "Requested sheets not found"
+
+  )
+
 })
 
 # =============================================================================
 # CORRUPTION TESTING
 # =============================================================================
-test_that("handles corrupted xlsx files gracefully", {
+test_that("fails on corrupted Excel files", {
+
   path <- make_corrupt_excel_file()
 
-  expect_error(snapshot_excel(path), NA)
+  expect_error(
 
-  result <- snapshot_excel(path)
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 0)
+    snapshot_excel(path),
+
+    "Unable to read workbook structure"
+
+  )
+
 })
 
 # =============================================================================
@@ -213,13 +248,11 @@ test_that("handles many sheets efficiently", {
   expect_equal(nrow(result), 25)
 })
 
-test_that("handles wide actuarial tables", {
+test_that("handles wide tables", {
   wide_df <- as.data.frame(matrix(runif(5000), nrow = 100))
   names(wide_df) <- paste0("feature_", seq_len(ncol(wide_df)))
 
   path <- make_excel_file(list(PricingFactors = wide_df))
-
-  expect_error(snapshot_excel(path), NA)
 
   result <- snapshot_excel(path)
   expect_equal(result$n_rows, 100)
@@ -234,8 +267,6 @@ test_that("handles unicode sheet and column names", {
     "测试" = data.frame(y = letters[1:3]),
     "Δοκιμή" = data.frame(z = 1:3)
   ))
-
-  expect_error(snapshot_excel(path), NA)
 
   result <- snapshot_excel(path)
   expect_equal(nrow(result), 3)

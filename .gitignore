@@ -1,7 +1,64 @@
-.Rproj.user
+
+# R session history and workspace files
 .Rhistory
+.Rapp.history
 .RData
-.httr-oauth
+.Ruserdata
+
+# RStudio user-specific files
+.Rproj.user/
+
+# RStudio project files (uncomment if you do not want to version them)
+# *.Rproj
+
+# Temporary and backup files
+*.tmp
+*.bak
+*~
+
+# Compiled source artifacts
+src/*.o
+src/*.so
+src/*.dll
+src/*.dylib
+
+# Package build and check outputs
+.Rcheck/
+check/
+
+# Built package archives
+*.tar.gz
+
+# Generated documentation sites
+docs/
+pkgdown/
+
+# knitr and Quarto caches
+*_cache/
+.cache/
+.quarto/
+
+# Test-generated files
+tests/testthat/_snaps/
+tests/testthat/Rplots.pdf
+
+# Local environment and log files
+.Rprofile
+.Renviron
+*.log
+
+# renv (keep only files required to reproduce the environment)
+renv/*
+!renv/activate.R
+!renv/settings.json
+renv/library/
+renv/staging/
+renv/python/
+renv/cache/
+
+# IDE settings
+.vscode/
+
+# Operating system files
 .DS_Store
-.quarto
-docs
+Thumbs.db

@@ -75,14 +75,14 @@ create_dict <- function(raw_data, output_file = NULL, verbose = TRUE) {
 
     if (type == "numeric") {
       base$mean <- mean(x, na.rm = TRUE)
-      base$sd <- sd(x, na.rm = TRUE)
+      base$sd <- stats::sd(x, na.rm = TRUE)
       base$min <- min(x, na.rm = TRUE)
       base$max <- max(x, na.rm = TRUE)
     }
 
     if (type %in% c("character", "factor")) {
       base$top_values <- paste(
-        head(names(sort(table(x), decreasing = TRUE)), 3),
+        utils::head(names(sort(table(x), decreasing = TRUE)), 3),
         collapse = ", "
       )
     }
