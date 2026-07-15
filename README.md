@@ -1,6 +1,12 @@
 
 # xlversion
 
+[![R Version](https://img.shields.io/badge/R-%3E%3D%204.0-blue?logo=r)](https://www.r-project.org/)
+[![Development Status](https://img.shields.io/badge/Status-Active%20Development-orange)](https://github.com/Verag/xlversion)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Repo](https://img.shields.io/badge/Repo-Verag/xlversion-lightgrey)](https://github.com/Verag/xlversion)
+
+
 **Versioning and change tracking for Excel files (.xlsx)**
 
 A lightweight R package for creating deterministic fingerprints,
